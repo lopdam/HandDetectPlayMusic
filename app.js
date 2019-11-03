@@ -20,22 +20,28 @@ const context=canvas.getContext('2d');
 let model;
 
 handTrack.startVideo(video).then(status =>{
-
   if(status){
     navigator.getUserMedia({video:{}},stream =>{
       video.srcObject=stream;
-      setInterval(runDetection,1000);
+    runDetection();
     },err => console.log(err));
 
-  }polito
+  }
 });
 function runDetection(){
   model.detec(video).then(predictions=>{
     console.log(predictions);
-    model.renderPrediction(predictions,canvas,context,video);
+    if(predictions.length>0){
+      audio.play();
+    }
+    requestAnimationFrame(runDetection);
   });
-}
+};
 
 handTrack.load(modelParams).then(lmodel =>{
   model=lmodel;
 });
+
+
+
+
